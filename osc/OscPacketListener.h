@@ -66,11 +66,13 @@ public:
 	virtual void ProcessPacket( const char *data, int size, 
 			const IpEndpointName& remoteEndpoint )
     {
-        osc::ReceivedPacket p( data, size );
-        if( p.IsBundle() )
-            ProcessBundle( ReceivedBundle(p), remoteEndpoint );
-        else
-            ProcessMessage( ReceivedMessage(p), remoteEndpoint );
+		if (data && size > 0) {
+			osc::ReceivedPacket p( data, size );
+			if( p.IsBundle() )
+				ProcessBundle( ReceivedBundle(p), remoteEndpoint );
+			else
+				ProcessMessage( ReceivedMessage(p), remoteEndpoint );
+		}
     }
 };
 

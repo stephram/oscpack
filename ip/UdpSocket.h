@@ -89,6 +89,11 @@ public:
 	UdpSocket();
 	virtual ~UdpSocket();
 
+	// Enable joining a multicast group using the 
+	// IP_ADD_MEMBERSHIP socket option.
+	// Must be called before Bind().
+	void SetJoinMulticastGroup(IpEndpointName multicastEndpoint);
+
 	// Enable broadcast addresses (e.g. x.x.x.255)
 	// Sets SO_BROADCAST socket option.
 	void SetEnableBroadcast( bool enableBroadcast );

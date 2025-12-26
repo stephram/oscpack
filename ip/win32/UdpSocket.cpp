@@ -36,6 +36,7 @@
 */
 
 #include <winsock2.h>   // this must come first to prevent errors with MSVC7
+#include <ws2tcpip.h>
 #include <windows.h>
 #include <mmsystem.h>   // for timeGetTime()
 
@@ -120,6 +121,17 @@ public:
 	{
 		if (socket_ != INVALID_SOCKET) closesocket(socket_);
 	}
+
+	void SetJoinMulticastGroup(IpEndpointName multicastEndpoint)
+	{
+		struct ip_mreq mreq;
+		mreq.imr_multiaddr.s_addr = htonl(multicastEndpoint.address);
+		mreq.imr_interface.s_addr = htonl(INADDR_ANY);
+
+		if (setsockopt(socket_, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mreq, sizeof(mreq)) < 0) {
+			throw std::runtime_error("unable to join multicast group\n");
+		}
+    }	
 
 	void SetEnableBroadcast( bool enableBroadcast )
 	{
@@ -250,6 +262,11 @@ UdpSocket::UdpSocket()
 UdpSocket::~UdpSocket()
 {
 	delete impl_;
+}
+
+void UdpSocket::SetJoinMulticastGroup(IpEndpointName multicastEndpoint)
+{
+	impl_->SetJoinMulticastGroup(multicastEndpoint);
 }
 
 void UdpSocket::SetEnableBroadcast( bool enableBroadcast )
