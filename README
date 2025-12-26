@@ -119,6 +119,17 @@ You will see some "error while parsing message" messages printed.
 You can use ./bin/OscDump to print out OSC messages received
 from any program, including the test programs.
 
+--
+Multicast support
+
+The UdpSocket class now contains the SetJoinMulticastGroup(IpEndpointName)
+method which will add the necessary IP_ADD_MEMBERSHIP socket option if the
+address specified in the IpEndpointName argument is a multicast address.
+Keep in mind there are public and private multicast address ranges when
+specifying the address.
+
+The tests/OscMulticastReceiveTest.cpp contains an example of how to 
+use the multicast support.
 
 --
 
