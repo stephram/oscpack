@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.5)
 PROJECT(TestOscpack)
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR})
@@ -51,7 +51,6 @@ TARGET_LINK_LIBRARIES(OscSendTests oscpack ${LIBS})
 
 ADD_EXECUTABLE(OscReceiveTest tests/OscReceiveTest.cpp)
 TARGET_LINK_LIBRARIES(OscReceiveTest oscpack ${LIBS})
-
 
 ADD_EXECUTABLE(OscDump examples/OscDump.cpp)
 TARGET_LINK_LIBRARIES(OscDump oscpack ${LIBS})
